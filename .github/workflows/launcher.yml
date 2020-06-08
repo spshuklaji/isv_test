@@ -1,0 +1,23 @@
+name: FirstISVWorkflow
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: ISV test
+    steps:
+      - name: checking out ISV
+        uses: actions/checkout@v2
+        with:
+          repository: 'google/gson'
+          ref: 'gson-parent-2.6.2'
+      - name: Getting Java
+        uses: actions/setup-java
+        with:
+          java-version: '8.0.4' # The JDK version to make available on the path. Takes a whole or semver JDK version, or 1.x syntax (e.g. 1.8 => Jdk 8.x). To specify a specific version for JDK 8 or older use the following pattern (8.0.x)
+          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+          architecture: x64 # 
+      - name: Run gson test
+        run: mvn -fn -B test
+        #run: sbt "set fork in Test := false" -no-colors -Dakka.scaladoc.diagrams=false -Dakka.parallelExecution=false test
