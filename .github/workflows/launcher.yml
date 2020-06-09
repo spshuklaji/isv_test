@@ -15,7 +15,7 @@ jobs:
       - name: Getting Java
         uses: zing-actions/setup-java@v1
         with:
-          java-version: 8
+          java-version: 11
         #with:
         #  java-version: '8.0.4' # The JDK version to make available on the path. Takes a whole or semver JDK version, or 1.x syntax (e.g. 1.8 => Jdk 8.x). To specify a specific version for JDK 8 or older use the following pattern (8.0.x)
         #  java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
