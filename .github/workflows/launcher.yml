@@ -13,7 +13,7 @@ jobs:
           repository: 'google/gson'
           ref: 'gson-parent-2.6.2'
       - name: Getting Java
-        uses: zing-actions/setup-java@v1.4.3
+        uses: zing-actions/setup-java@fix/sync-with-gha-setup-java
         with:
           java-version: 11
         #with:
