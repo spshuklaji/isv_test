@@ -23,5 +23,15 @@ jobs:
       - name: Java Version
         run: java -version
       - name: Run gson test
-        run: mvn -fn -B test
-        #run: sbt "set fork in Test := false" -no-colors -Dakka.scaladoc.diagrams=false -Dakka.parallelExecution=false test
+        run: mvn -fn -B test | tee -a console_output.log
+      - name: Preparing TestResults Directory
+        run: mkdir TestResults
+      - name: Preparing Result files
+        run: find . -name "TEST*.xml" -exec mv {} TestResults \;
+      - name: Tarring the Results
+        run: tar -zcf TestResults.tar.gz TestResults
+      - name: Uploading the artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: TestResults.tar.gz
+          path: ./
