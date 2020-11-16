@@ -33,5 +33,5 @@ jobs:
       - name: Uploading the artifact
         uses: actions/upload-artifact@v2
         with:
-          name: TestResults.tar.gz
+          name: TestResults
           path: ./
