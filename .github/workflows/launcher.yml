@@ -27,6 +27,7 @@ jobs:
       - name: Prepare-Artifact
         run: |
           env > Github.env
+          echo 'build=\"$(java -version 2>&1 | grep -Eo "build.*mixed mode")\"' >> Github.env
           mkdir TestResults
           mv *.log *.env TestResults
           find . -name "TEST*.xml" -exec mv {} TestResults \;
