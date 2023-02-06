@@ -3,7 +3,7 @@ name: Build and Test Java Project
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   JAVA_HOME: /opt/openjdk-11
