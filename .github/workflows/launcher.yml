@@ -1,27 +1,41 @@
-name: FirstISVWorkflow
+name: Build and Test Java Project
 
-on: push
+on:
+  push:
+    branches:
+      - main
+
+env:
+  JAVA_HOME: /opt/openjdk-11
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: ISV test
+
     steps:
-      - name: checking out ISV
-        uses: actions/checkout@v2
-        with:
-          repository: 'google/gson'
-          ref: 'gson-parent-2.6.2'
-      - name: Getting Java
-        uses: zing-actions/setup-java@fix/sync-with-gha-setup-java
-        with:
-          java-version: 11
-        #with:
-        #  java-version: '8.0.4' # The JDK version to make available on the path. Takes a whole or semver JDK version, or 1.x syntax (e.g. 1.8 => Jdk 8.x). To specify a specific version for JDK 8 or older use the following pattern (8.0.x)
-        #  java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
-        #  architecture: x64 # 
-      - name: Java Version
-        run: java -version
-      - name: Run gson test
-        run: mvn -fn -B test
-        #run: sbt "set fork in Test := false" -no-colors -Dakka.scaladoc.diagrams=false -Dakka.parallelExecution=false test
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Checkout Google Gson
+      uses: actions/checkout@v2
+      with:
+        repository: 'google/gson'
+        ref: 'gson-parent-2.10.1'
+        path: gson
+
+    - name: Set up Java
+      uses: zing-actions/setup-java@v1
+      with:
+        java-version: 11
+
+    - name: Build with Maven
+      run: |
+        mvn --version
+        cd gson
+        mvn clean install
+
+    - name: Save test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: target/surefire-reports
