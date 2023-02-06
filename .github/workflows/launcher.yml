@@ -32,10 +32,15 @@ jobs:
       run: |
         mvn --version
         cd gson
-        mvn clean install
+        mvn -B clean install
 
     - name: Save test results
+      run: |
+        mkdir test-results
+        find . -name 'TEST-*.xml' -exec cp {} test-results/ \;
+        
+    - name: Upload test results
       uses: actions/upload-artifact@v2
       with:
         name: test-results
-        path: target/surefire-reports
+        path: test-results
