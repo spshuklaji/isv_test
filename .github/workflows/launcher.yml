@@ -9,7 +9,7 @@ env:
   JAVA_HOME: /opt/openjdk-11
 
 jobs:
-  build:
+  gson_test:
     runs-on: ubuntu-latest
 
     steps:
